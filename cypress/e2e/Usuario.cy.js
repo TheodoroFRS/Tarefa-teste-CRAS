@@ -1,8 +1,8 @@
 describe('Login', () => {
   beforeEach(() => {
     cy.visit('https://front-cras.app.fslab.dev/');
-    cy.get("#email").type("diodete.moreira5030418844@gmail.com");
-    cy.get("#senha").type("123");
+    cy.get("#email").type("Theo@gmail.com");
+    cy.get("#senha").type("@Theo12345678");
     cy.get(" .styles_button__dr0t2").click();
   })
 
@@ -17,8 +17,8 @@ describe('Login', () => {
     cy.get("#emailCadastrar").type("testeCras@gmail.com");
     cy.get("#senhaCadastrar").type("asd");
     
-    cy.get("#unidadeCadastrar").type("testeCras@gmail.com");
-    cy.get("#grupoCadastrar").type("testeCras@gmail.com");
+    cy.get("#unidadeCadastrar").click();
+    cy.get("#grupoCadastrar").click();
 
     cy.get('[type="submit"]').click();
   })
