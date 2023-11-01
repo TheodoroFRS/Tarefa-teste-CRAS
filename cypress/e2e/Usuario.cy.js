@@ -1,3 +1,5 @@
+import fake from "faker-br"
+
 describe("Login", () => {
   beforeEach(() => {
     cy.visit("https://front-cras.app.fslab.dev/");
@@ -6,94 +8,82 @@ describe("Login", () => {
     cy.get(" .styles_button__dr0t2").click();
   });
 
-  // it('Deve realizar realizar cadastro de um usuário com status ativo - cenário de sucesso', () => {
+  const nomeFaker = fake.name.firstName()
 
-  //   cy.get(".styles_buttonMenu__mmyUS > img").click();
+  it('Deve realizar realizar cadastro de um usuário com status ativo - cenário de sucesso', () => {
 
-  //   cy.visit('https://front-cras.app.fslab.dev/usuarios/listar')
-  //   cy.get("    :nth-child(5) > .styles_button__dr0t2").click();
+    cy.get(".styles_buttonMenu__mmyUS > img").click();
 
-  //   cy.get("#nomeCadastrar").type("TesteCrasTheo");
-  //   cy.get("#emailCadastrar").type("TesteCrasTheo@gmail.com");
-  //   cy.get("#senhaCadastrar").type("@TesteCrasTheo12345678");
+    cy.visit('https://front-cras.app.fslab.dev/usuarios/listar')
+    cy.get("    :nth-child(5) > .styles_button__dr0t2").click();
 
-  //   cy.get('#unidadeCadastrar').select('CRAS - Vilhena')
-  //   cy.get('#grupoCadastrar').select('Administrador')
+    cy.get("#nomeCadastrar").type(nomeFaker);
+    cy.get("#emailCadastrar").type(fake.internet.email());
+    cy.get("#senhaCadastrar").type(fake.internet.password() + "@12345678");
 
-  //   cy.get('[type="submit"]').click();
-  //   // //cy.get('.Toastify__toast-body').contains('Usuário cadastrado com sucesso!');
-  // })
+    cy.get('#unidadeCadastrar').select('CRAS - Vilhena')
+    cy.get('#grupoCadastrar').select('Administrador')
 
-  //   it('Deve retornar as mensagem de validação ao cadastrar usuário  - cenário de insucesso', () => {
+    cy.get('[type="submit"]').click();
+    cy.get('.Toastify__toast-body').contains('Usuário cadastrado com sucesso');
+  })
 
-  //   cy.get(".styles_buttonMenu__mmyUS > img").click();
+    it('Deve retornar as mensagem de validação ao cadastrar usuário  - cenário de insucesso', () => {
 
-  //   cy.visit('https://front-cras.app.fslab.dev/usuarios/listar')
-  //   cy.get("    :nth-child(5) > .styles_button__dr0t2").click();
+    cy.get(".styles_buttonMenu__mmyUS > img").click();
 
-  //   cy.get("#nomeCadastrar").type("TesteCrasTheo");
-  //   cy.get("#emailCadastrar").type("TesteCrasTheo@gmail.com");
-  //   cy.get("#senhaCadastrar").type("@TesteCrasTheo12345678");
+    cy.visit('https://front-cras.app.fslab.dev/usuarios/listar')
+    cy.get("    :nth-child(5) > .styles_button__dr0t2").click();
 
-  //   cy.get('#unidadeCadastrar').select('CRAS - Vilhena')
-  //   cy.get('#grupoCadastrar').select('Administrador')
+    cy.get("#nomeCadastrar").type(nomeFaker);
+    cy.get("#emailCadastrar").type("TesteCrasTheo@gmail.com");
+    cy.get("#senhaCadastrar").type(fake.internet.password() + "T@t12345678");
 
-  //   cy.get('[type="submit"]').click();
-  //   cy.get('.Toastify__toast-body').contains('E-mail já cadastrado!');
-  // })
+    cy.get('#unidadeCadastrar').select('CRAS - Vilhena')
+    cy.get('#grupoCadastrar').select('Administrador')
 
-  // it("Deve retornar uma consulta do usurário cadastrado com status ativo - cenário de sucesso", () => {
-  //   cy.get(".styles_buttonMenu__mmyUS > img").click();
+    cy.get('[type="submit"]').click();
+    cy.get('.Toastify__toast-body').contains('E-mail já cadastrado!');
+  })
 
-  //   cy.visit("https://front-cras.app.fslab.dev/usuarios/listar");
+  it("Deve retornar uma consulta do usurário cadastrado com status ativo - cenário de sucesso", () => {
+    cy.get(".styles_buttonMenu__mmyUS > img").click();
 
-  //   cy.get(":nth-child(4) > .styles_button__dr0t2").click();
+    cy.visit("https://front-cras.app.fslab.dev/usuarios/listar");
 
-  //   cy.get("tbody > :nth-child(1) > :nth-child(4)").contains("Sim");
-  // });
+    cy.get("#nome").type(nomeFaker);
+    cy.get(":nth-child(4) > .styles_button__dr0t2").click();
 
-  // it("Deve retornar uma consulta do usurário cadastrado com status inativo - cenário de sucesso", () => {
-  //   cy.get(".styles_buttonMenu__mmyUS > img").click();
+    cy.get(" tbody > :nth-child(1) > :nth-child(1)").contains(nomeFaker);
+    cy.get("tbody > :nth-child(1) > :nth-child(4)").contains("Sim");
+  });
 
-  //   cy.visit("https://front-cras.app.fslab.dev/usuarios/listar");
+  it("Deve atualizar os dados de um usuário - cenário de sucesso", () => {
+    cy.get(".styles_buttonMenu__mmyUS > img").click();
 
-  //   cy.get("span.styles_slider__0TNp_").click();
-  //   cy.get(":nth-child(4) > .styles_button__dr0t2").click();
-  //   // buscar por não ativo não funciona
+    cy.visit("https://front-cras.app.fslab.dev/usuarios/listar");
 
-  //   // cy.get("#nome").type("TesteCrasTheo");
+    cy.get("#nome").type(nomeFaker);
 
-  //   // cy.get(":nth-child(4) > .styles_button__dr0t2").click();
+    cy.get(":nth-child(4) > .styles_button__dr0t2").click();
 
-  //   cy.get("tbody > :nth-child(1) > :nth-child(4)").contains("Não");
-  // });
+    cy.wait(1000)
 
-  // it("Deve atualizar os dados de um usuário - cenário de sucesso", () => {
-  //   cy.get(".styles_buttonMenu__mmyUS > img").click();
+    cy.get('[alt="Atualizar usuário"]').click();
 
-  //   cy.visit("https://front-cras.app.fslab.dev/usuarios/listar");
+    cy.get('#grupo').select('Padrão')
 
-  //   cy.get("#nome").type("TesteCrasTheo");
+    cy.get('[type="submit"]').click();
 
-  //   cy.get(":nth-child(4) > .styles_button__dr0t2").click();
-
-  //   cy.wait(1000)
-
-  //   cy.get('[alt="Atualizar usuário"]').click();
-
-  //   cy.get('#grupo').select('Padrão')
-
-  //   cy.get('[type="submit"]').click();
-
-  //   cy.get('.Toastify__toast-body > :nth-child(2)').contains('Usuário atualizado com sucesso');
-  // });
+    cy.get('.Toastify__toast-body > :nth-child(2)').contains('Usuário atualizado com sucesso');
+  });
 
   it("Deve visualizar as informações de um usuário - cenário de sucesso", () => {
     cy.get(".styles_buttonMenu__mmyUS > img").click();
 
     cy.visit("https://front-cras.app.fslab.dev/usuarios/listar");
 
-    cy.get("#nome").type("TesteCrasTheo");
+    cy.get("#nome").type(nomeFaker);
 
     cy.get(":nth-child(4) > .styles_button__dr0t2").click();
 
@@ -107,9 +97,8 @@ describe("Login", () => {
 });
 
 // 2 Usuario.cy.js
-// Texto do caso de teste 'Deve realizar realizar cadastro de um usuário com status ativo - cenário de sucesso'
+// Texto do caso de teste 'Deve realizar realizar cadastro de um usuário com status ativo - cenário de sucesso' 
 // Texto do caso de teste 'Deve retornar as mensagem de validação ao cadastrar usuário  - cenário de insucesso'
 // Texto do caso de teste 'Deve retornar uma consulta do usurário cadastrado com status ativo - cenário de sucesso'
-// Texto do caso de teste 'Deve retornar uma consulta do usurário cadastrado com status inativo - cenário de sucesso'
-// Texto do caso de teste 'Deve atualizar os dados de um usuário - cenário de sucesso '
-// Texto do caso de teste 'Deve visualizar as informações de um usuário - cenário de sucesso'
+// Texto do caso de teste 'Deve atualizar os dados de um usuário - cenário de sucesso ' 
+// Texto do caso de teste 'Deve visualizar as informações de um usuário - cenário de sucesso' 
