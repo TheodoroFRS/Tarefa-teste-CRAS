@@ -1,69 +1,41 @@
 import fake from "faker-br"
 /// <reference types="cypress"/>
 
-
 describe("Tipo de atendimento", () => {
   beforeEach(() => {
     cy.visit("https://front-cras.app.fslab.dev/");
     cy.login(Cypress.env('Email'), Cypress.env('Senha'), {log: false });
+    cy.tipo_atendimentos()
   });
 
-  const nomeFaker = fake.name.firstName()
+  const atendimento = fake.name.firstName()
+  const novoatendimento = fake.name.firstName()
 
   it('Deve cadastrar tipo de atendimento com todos os campos preenchidos', () => {
-
-    // cy.get(".styles_buttonMenu__mmyUS > img").click();
-
-    // cy.visit('https://front-cras.app.fslab.dev/usuarios/listar')
-    // cy.get("    :nth-child(5) > .styles_button__dr0t2").click();
-
-    // cy.get("#nomeCadastrar").type(nomeFaker);
-    // cy.get("#emailCadastrar").type(fake.internet.email());
-    // cy.get("#senhaCadastrar").type(fake.internet.password() + "@12345678");
-
-    // cy.get('#unidadeCadastrar').select('CRAS - Vilhena')
-    // cy.get('#grupoCadastrar').select('Administrador')
-
-    // cy.get('[type="submit"]').click();
-    // cy.get('.Toastify__toast-body').contains('Usuário cadastrado com sucesso');
+    cy.get(':nth-child(3) > .styles_container__NSLBw > #buscar').click()
+    cy.get('#nome').type(atendimento)
+    cy.get('[type="submit"]').click()
+    cy.get('.Toastify__toast-body > :nth-child(2)').contains("Tipo de Atendimento cadastrado com sucesso")
   })
 
-  it('Deve retornar msg de campos obrigatórios', () => {
+   it('Deve retornar msg de campos obrigatórios', () => {
+    cy.get(':nth-child(3) > .styles_container__NSLBw > #buscar').click()
+    cy.wait(1000)
+    cy.get('[type="submit"]').click()
+    cy.get('.styles_errorMessage__IKSlh').contains('Nome é obrigatório')
+    cy.wait(1000)
+   })
 
-    // cy.get(".styles_buttonMenu__mmyUS > img").click();
+   it('Deve pesquisar um tipo de atendimento e alterar seu nome', () => {
+    cy.get('#tipo').type(atendimento)
+    cy.get(':nth-child(2) > .styles_container__NSLBw > #buscar').click()
+ 
+    cy.get('tbody > .styles_tr__2bCIW > :nth-child(1)').contains(atendimento)
+    cy.get('[alt="Editar tipo de atendimento"]').click()
 
-    // cy.visit('https://front-cras.app.fslab.dev/usuarios/listar')
-    // cy.get("    :nth-child(5) > .styles_button__dr0t2").click();
-
-    // cy.get("#nomeCadastrar").type(nomeFaker);
-    // cy.get("#emailCadastrar").type("TesteCrasTheo@gmail.com");
-    // cy.get("#senhaCadastrar").type(fake.internet.password() + "T@t12345678");
-
-    // cy.get('#unidadeCadastrar').select('CRAS - Vilhena')
-    // cy.get('#grupoCadastrar').select('Administrador')
-
-    // cy.get('[type="submit"]').click();
-    // cy.get('.Toastify__toast-body').contains('E-mail já cadastrado!');
-  })
-
-  it("Deve pesquisar um tipo de atendimento e alterar seu nome", () => {
-    // cy.get(".styles_buttonMenu__mmyUS > img").click();
-
-    // cy.visit("https://front-cras.app.fslab.dev/usuarios/listar");
-
-    // cy.get("#nome").type(nomeFaker);
-    // cy.get(":nth-child(4) > .styles_button__dr0t2").click();
-
-    // cy.get(" tbody > :nth-child(1) > :nth-child(1)").contains(nomeFaker);
-    // cy.get("tbody > :nth-child(1) > :nth-child(4)").contains("Sim");
-  });
-
+    cy.get('#nome').clear()
+    cy.get('#nome').type(novoatendimento)
+    cy.get('[type="submit"]').click()
+    cy.get('.Toastify__toast-body > :nth-child(2)').contains("Tipo de Atendimento Atualizado com sucesso")
+   })
 });
-
-// Texto do describe("Tipo de atendimento")
-
-// Texto do caso de teste("Deve cadastrar tipo de atendimento com todos os campos preenchidos")
-
-// Texto do caso de teste ("Deve retornar msg de campos obrigatórios")
-
-// Texto do caso de teste ("Deve pesquisar um tipo de atendimento e alterar seu nome")
